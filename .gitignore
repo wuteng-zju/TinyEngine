@@ -363,6 +363,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # bin文件夹
+bin-int/
 
 # VS项目文件忽略
 *.sln
