@@ -53,7 +53,7 @@ void SandBoxParticleLayer::OnDetach()
 
 }
 
-void SandBoxParticleLayer::OnUpdate(const TimeStep& timeStep)
+void SandBoxParticleLayer::OnUpdate(const Time& timeStep)
 {
 	TINY_ENGINE_PROFILE_SCOPE("SandBoxParticleLayer::OnUpdate");
 

@@ -5,15 +5,20 @@
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
-class SandBoxEditorLayer:public Layer
+// SandBoxEditorLayer类
+class SandBoxEditorLayer :public Layer
 {
 public:
+	// 构造函数
 	SandBoxEditorLayer();
+	// 析构函数
 	~SandBoxEditorLayer();
+	// 被压入层栈时
 	virtual void OnAttach() override;
+	// 被推出层栈时
 	virtual void OnDetach() override;
-
-	virtual void OnUpdate(const TimeStep& timeStep) override;
+	// 更新时
+	virtual void OnUpdate(const Time& deltaTime) override;
 	virtual void OnImGuiRender() override;
 	void OnEvent(Event& e) override;
 private:

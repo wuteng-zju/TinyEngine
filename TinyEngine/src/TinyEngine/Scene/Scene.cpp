@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "Scene.h"
-#include "TinyEngine/Render/Render2D.h"
+
 #include "Entity.h"
+
+#include "TinyEngine/Render/Render2D/Render2D.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
@@ -194,7 +196,7 @@ void Scene::OnShowPhysicsCollider(const Ref<Camera>& spCamera)
 	Render2D::EndScene();
 }
 
-void Scene::OnUpdate(const TimeStep& timeStep)
+void Scene::OnUpdate(const Time& Time)
 {
 	//{
 	//	m_spRegistry->view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
@@ -206,12 +208,12 @@ void Scene::OnUpdate(const TimeStep& timeStep)
 	//			nsc.Instance->OnCreate();
 	//		}
 
-	//		nsc.Instance->OnUpdate(timeStep);
+	//		nsc.Instance->OnUpdate(Time);
 	//	});
 	//}
 
 	{
-		m_spPhysicsSystem2D->OnUpdate(timeStep);
+		m_spPhysicsSystem2D->OnUpdate(Time);
 
 		auto components = m_spRegistry->view<RigidBody2DComponent>();
 		for (auto component : components)
@@ -246,10 +248,10 @@ void Scene::OnUpdate(const Ref<Camera>& spCamera)
 	RenderScene(spCamera);
 }
 
-void Scene::OnUpdate(const TimeStep& timeStep, const Ref<Camera>& spCamera)
+void Scene::OnUpdate(const Time& Time, const Ref<Camera>& spCamera)
 {
 	{
-		m_spPhysicsSystem2D->OnUpdate(timeStep);
+		m_spPhysicsSystem2D->OnUpdate(Time);
 
 		auto components = m_spRegistry->view<RigidBody2DComponent>();
 		for (auto component : components)
@@ -323,7 +325,6 @@ void Scene::RenderScene(const Ref<Camera>& spCamera)
 
 		Render2D::DrawCircle(circleTransform.GetTransform(), circle, static_cast<int>(circleComponent));
 	}
-
 
 	Render2D::EndScene();
 }

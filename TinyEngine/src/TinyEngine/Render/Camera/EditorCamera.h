@@ -11,7 +11,7 @@ class EditorCamera :public PerspectiveGraphicCamera
 {
 public:
 	EditorCamera(float fFOV, float fAspectRatio, float fNearClip = 0.1f, float fFarClip = 1000.f);
-	void OnUpdate(const TimeStep& ts);
+	void OnUpdate(const Time& ts);
 	void OnEvent(Event& e);
 
 	float GetDistance();

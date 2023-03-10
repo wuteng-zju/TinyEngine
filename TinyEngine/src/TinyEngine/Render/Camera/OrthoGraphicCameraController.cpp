@@ -34,7 +34,7 @@ float OrthoGraphicCameraController::GetZoomLevel() const
 	return m_fZoomLevel;
 }
 
-void OrthoGraphicCameraController::OnUpdate(TimeStep timeStep)
+void OrthoGraphicCameraController::OnUpdate(Time timeStep)
 {
 	TINY_ENGINE_PROFILE_FUNCTION();
 	if (Input::IsKeyPressed(Key::W))

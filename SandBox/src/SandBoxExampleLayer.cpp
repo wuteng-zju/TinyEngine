@@ -89,7 +89,7 @@ void SandBoxExampleLayer::OnDetach()
 
 }
 
-void SandBoxExampleLayer::OnUpdate(const TimeStep& timeStep)
+void SandBoxExampleLayer::OnUpdate(const Time& timeStep)
 {
 	m_spOrthoGraphicCameraController->OnUpdate(timeStep);
 

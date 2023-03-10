@@ -12,31 +12,42 @@ enum class SceneState
 };
 
 class UUID;
+
+// Scene场景类
 class Scene
 {
 public:
+	// 构造函数
 	Scene();
+	// 析构函数
 	~Scene();
+	// 拷贝构造函数
 	Scene(const Ref<Scene>& spScene);
 
+	/********************************* 创建Entity ********************************************/
 	Ref<Entity> CreateEntity(const Ref<Entity>& spSrcEntity);
 	Ref<Entity> CreateEntity(const std::string& sName = std::string());
 	Ref<Entity> CreateEntityWithUUID(const UUID& uuid, const std::string& sName);
 
+	// 
 	void OnRuntimeStart();
 	void OnRuntimeStop();
 
+	// 
 	void OnSimulationStart();
 	void OnSimulationStop();
 
+	// 
 	void OnShowPhysicsCollider(const Ref<Camera>& spCamera);
 
-	void OnUpdate(const TimeStep& timeStep);
+	// 
+	void OnUpdate(const Time& timeStep);
 	void OnUpdate(const Ref<Camera>& spCamera);
-	void OnUpdate(const TimeStep& timeStep, const Ref<Camera>& spCamera);
+	void OnUpdate(const Time& timeStep, const Ref<Camera>& spCamera);
 	void OnViewPortResize(unsigned int uiWidth, unsigned int uiHeight);
 	const Ref<entt::registry>& Registry()const;
 
+	// 
 	Ref<Entity> GetPrimaryCameraEntity();
 
 private:
@@ -44,6 +55,7 @@ private:
 	void OnPhysics2DStop();
 	void RenderScene(const Ref<Camera>& spCamera);
 private:
+	// 
 	unsigned int m_uiWidth;
 	unsigned int m_uiHeight;
 	Ref<entt::registry> m_spRegistry;

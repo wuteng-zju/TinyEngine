@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
-
+// 透视相机类
 class PerspectiveGraphicCamera :public Camera
 {
 public:

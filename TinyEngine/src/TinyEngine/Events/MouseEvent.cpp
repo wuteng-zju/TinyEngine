@@ -16,6 +16,8 @@ float MouseMovedEvent::GetMouseY() const
 {
 	return m_fMouseY;
 }
+
+// 打印鼠标移动的偏移值
 std::string MouseMovedEvent::ToString() const
 {
 	std::stringstream ss;
@@ -36,6 +38,8 @@ float MouseScrolledEvent::GetYOffset() const
 {
 	return m_fYOffset;
 }
+
+// 打印鼠标滚动的偏移值
 std::string MouseScrolledEvent::ToString() const
 {
 	std::stringstream ss;
@@ -55,6 +59,8 @@ MouseButtonPressedEvent::MouseButtonPressedEvent(MouseCode uiMouseCode) :
 {
 
 }
+
+// 打印按下了哪个鼠标键
 std::string MouseButtonPressedEvent::ToString() const
 {
 	std::stringstream ss;
@@ -66,12 +72,15 @@ MouseButtonReleasedEvent::MouseButtonReleasedEvent(MouseCode uiMouseCode) :
 	MouseButtonEvent(uiMouseCode)
 {
 }
+
+// 打印释放了哪个鼠标键
 std::string MouseButtonReleasedEvent::ToString() const
 {
 	std::stringstream ss;
 	ss << "MouseButtonRelease: " << m_uiMouseCode;
 	return ss.str();;
 }
+
 MouseCode MouseButtonEvent::GetMouseButton() const
 {
 	return m_uiMouseCode;

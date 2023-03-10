@@ -4,19 +4,22 @@
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
-// 输入类
+// 输入类（单例模式）
 class Input
 {
 public:
-	// 按键
+	// 键盘是否按下
 	static bool IsKeyPressed(KeyCode keyCode);
 
-	// 鼠标
+	// 鼠标是否点击
 	static bool IsMouseButtonPressed(KeyCode keyCode);
+
+	// 获取鼠标位置、X坐标、Y坐标
 	static glm::vec2 GetMousePos();
 	static float GetMouseXPos();
 	static float GetMouseYPos();
 
+	// 析构函数
 	~Input() = default;
 protected:
 	virtual bool IsKeyPressedImpl(KeyCode keyCode) = 0;
@@ -32,6 +35,7 @@ private:
 	Input& operator=(const Input&) = delete;
 
 private:
+	// 
 	static Ref<Input> m_spInput;
 };
 

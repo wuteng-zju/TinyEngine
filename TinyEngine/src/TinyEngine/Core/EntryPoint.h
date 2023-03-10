@@ -1,11 +1,13 @@
 #pragma once
 #include "pch.h"
+
 #include "Application.h"
 #include "Logger.h"
 #include "TinyEngine/Debug/Instrumentor.h"
 
 #ifdef TINY_ENGINE_PLATFORM_WINDOWS
 
+// 入口main函数
 int main(int argc, char**argv)
 {
 	// 
@@ -20,7 +22,7 @@ int main(int argc, char**argv)
 
 	// 
 	TINY_ENGINE_PROFILE_BEGIN_SESSION("Runtime", "TinyEngineProfile-Startup.json");
-	// 获取app
+	// 获取应用
 	auto app = TinyEngine::Application::GetApplication();
 	// 运行
 	app->Run();

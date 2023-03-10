@@ -30,16 +30,21 @@ namespace
 	} 
 }
 
+// 构造函数
 PhysicsSystem2D::PhysicsSystem2D()
 {
+	// 创建一个2D的世界
 	m_spPhysicsWorld = CreateRef<b2World>(b2Vec2(0.f, -9.8f));
 }
 
+// 析构函数
 PhysicsSystem2D::~PhysicsSystem2D()
 {
 	m_spPhysicsWorld->DestroyBody(m_pBody);
 }
 
+
+// 
 void PhysicsSystem2D::CreateBody(RigidBody2DComponent& rigidBody2D, const TransformComponent& transform)
 {
 	b2BodyDef bodyDef;
@@ -52,6 +57,7 @@ void PhysicsSystem2D::CreateBody(RigidBody2DComponent& rigidBody2D, const Transf
 	rigidBody2D.RuntimeBody = m_pBody;
 }
 
+// 创建矩形形状
 void PhysicsSystem2D::CreatePolygonShape(BoxCollider2DComponent& boxCollider2D, const TransformComponent& transform)
 {
 	b2PolygonShape polygonShape;
@@ -67,6 +73,7 @@ void PhysicsSystem2D::CreatePolygonShape(BoxCollider2DComponent& boxCollider2D, 
 	m_pBody->CreateFixture(&fixtureDef);
 }
 
+// 创建圆形形状
 void PhysicsSystem2D::CreateCircleShape(CircleCollider2DComponent& circleCollider2D, const TransformComponent& transform)
 {
 	b2CircleShape circleShape;
@@ -83,11 +90,14 @@ void PhysicsSystem2D::CreateCircleShape(CircleCollider2DComponent& circleCollide
 	m_pBody->CreateFixture(&fixtureDef);
 }
 
-void PhysicsSystem2D::OnUpdate(const TimeStep& timeStep)
+// 
+void PhysicsSystem2D::OnUpdate(const Time& timeStep)
 {
 	m_spPhysicsWorld->Step(timeStep, uiVelocityIterations, uiPositionIterations);
 }
 
+
+// 更新系统
 void PhysicsSystem2D::UpdateSystem(RigidBody2DComponent& rigidBody2D, TransformComponent& transform)
 {
 	b2Body* pB2Body = (b2Body*)rigidBody2D.RuntimeBody;

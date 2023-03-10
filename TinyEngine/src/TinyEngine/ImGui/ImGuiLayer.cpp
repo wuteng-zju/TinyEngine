@@ -1,30 +1,36 @@
 #include "pch.h"
 #include "ImGuiLayer.h"
 
-#include "TinyEngine/Core/Application.h"
 #include "GLFW/glfw3.h"
+
 #include "examples/imgui_impl_glfw.h"
 #include "examples/imgui_impl_opengl3.h"
-#include "TinyEngine/Debug/Instrumentor.h"
 #include "ImGuizmo.h"
+
+#include "TinyEngine/Core/Application.h"
+#include "TinyEngine/Debug/Instrumentor.h"
+
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
+// 构造函数
 ImGuiLayer::ImGuiLayer() :Layer("ImguiLayer"), m_bBlockEvents(true)
 {
 
 }
 
+// 析构函数
 ImGuiLayer::~ImGuiLayer()
 {
 	LOG_DEV_INFO("ImGuiLayer Finalize");
 }
 
+// 压入层栈时
 void ImGuiLayer::OnAttach()
 {
 	TINY_ENGINE_PROFILE_FUNCTION();
 
-	// Setup Dear ImGui context
+	// 创建ImGui上下文
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 
@@ -45,8 +51,8 @@ void ImGuiLayer::OnAttach()
 	io.FontDefault = io.Fonts->AddFontFromFileTTF("assets/fonts/opensans/OpenSans-Regular.ttf", fontSize);
 
 	// Setup Dear ImGui style
-	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsClassic();
+	// ImGui::StyleColorsDark();
+	ImGui::StyleColorsClassic();
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -82,6 +88,7 @@ void ImGuiLayer::OnEvent(Event& e)
 	e.Handle = m_bBlockEvents;
 }
 
+// 开始新的一帧
 void ImGuiLayer::BeginNewFrame()
 {
 	ImGui_ImplOpenGL3_NewFrame();

@@ -1,13 +1,9 @@
 #include "pch.h"
-
-#define GL_GLEXT_PROTOTYPES
-#include "GL/gl3w.h"
 #include "WindowsWindow.h"
-#include "Platform/OpenGL/OpenGLContext.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
-Ref<Context> WindowsWindow::m_spContext = nullptr;
 
+Ref<Context> WindowsWindow::m_spContext = nullptr;
 namespace
 {
 	static void GLFWErrorCallback(int error, const char* description)
@@ -21,20 +17,26 @@ namespace
 WindowsWindow::WindowsWindow(const WindowProps& m_WindowProps) :Window(m_WindowProps)
 {
 	TINY_ENGINE_PROFILE_FUNCTION();
+
+	// 初始化窗口
 	Init();
 }
 
 // 析构函数
 WindowsWindow::~WindowsWindow()
 {
+	// 结束窗口
 	Shutdown();
 }
 
+// 窗口更新(渲染循环)
 void WindowsWindow::OnUpdate()
 {
-	// m_spContext->SwapBuffers();
-	glfwPollEvents();
+	// 交换缓冲区
 	glfwSwapBuffers(m_pGLFWWindow);
+
+	// 轮询IO时间（键盘或鼠标）
+	glfwPollEvents();
 }
 
 // 获取窗口宽度
@@ -55,7 +57,7 @@ inline void WindowsWindow::SetEventCallback(const EventCallbackFn& eventCallBack
 	m_windowCallBack.EventCallback = eventCallBack;
 }
 
-// 
+// 设置垂直同步
 void WindowsWindow::SetVSync(bool bEnabled)
 {
 	TINY_ENGINE_PROFILE_FUNCTION();
@@ -80,19 +82,19 @@ void WindowsWindow::Init()
 {
 	TINY_ENGINE_PROFILE_FUNCTION();
 
-	// 日志
+	// 日志输出：
 	LOG_DEV_INFO("Creating window {0} ({1}, {2})",
 		m_WindowProps.Title, m_WindowProps.Width, m_WindowProps.Height);
 
 	// 初始化glfw
-	bool bInit = glfwInit();
-	TINY_ENGINE_ASSERT(bInit, "Failed to initialize GLFW");
+	bool bGLFWInit = glfwInit();
+	TINY_ENGINE_ASSERT(bGLFWInit, "Failed to initialize GLFW");
 
-	// 设置窗口宽度、高度
+	// 设置窗口的宽度、高度
 	m_windowCallBack.Width = m_WindowProps.Width;
 	m_windowCallBack.Height = m_WindowProps.Height;
 
-	// 
+	// 设置OpenGL版本号
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_WindowProps.MajorVersion);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_WindowProps.MinorVersion);
 
@@ -104,36 +106,48 @@ void WindowsWindow::Init()
 	#endif
 		glfwWindowHint(GLFW_SAMPLES, m_WindowProps.Samples);
 
-	// 
+	// 创建窗口
 	{
 		TINY_ENGINE_PROFILE_SCOPE("glfw Create Window")
 			m_pGLFWWindow = glfwCreateWindow(m_WindowProps.Width,
 				m_WindowProps.Height, m_WindowProps.Title.c_str(), nullptr, nullptr);
 	}
 
-	// 
+	// 判断窗口是否创建成功
 	TINY_ENGINE_ASSERT(m_pGLFWWindow, "Failed to creat GLFW window");
 
-	// 上下文设置
+	// 将窗口的上下文设置成当前线程的上下文
 	m_spContext = Ref<OpenGLContext>(new OpenGLContext(m_pGLFWWindow));
 	m_spContext->Init();
 
+	/************************** 设置GLFW回调函数 *****************************/
+	// 错误回调函数
 	glfwSetErrorCallback(GLFWErrorCallback);
+
+	// 存储m_pGLFWWindow关联的回调数据指针
 	glfwSetWindowUserPointer(m_pGLFWWindow, &m_windowCallBack);
+
+	// 开启垂直同步
 	SetVSync(true);
 
-	//Set GLFW callbacks
+	// 窗口大小改变的回调函数
 	glfwSetWindowSizeCallback(m_pGLFWWindow, [](GLFWwindow* window, int width, int height)
 	{
+		// 获取m_pGLFWWindow关联的回调数据指针
 		auto& pWindowCallBack = *(WindowCallBack*)glfwGetWindowUserPointer(window);
+		// 设置窗口宽度和高度
 		pWindowCallBack.Width = width;
 		pWindowCallBack.Height = height;
 
+		// 创建改变窗口的事件
 		WindowResizedEvent event(width, height);
 		LOG_DEV_WARN("window resize {0},{1}", width, height);
+
+		// 设置窗口的事件回调函数
 		pWindowCallBack.EventCallback(event);
 	});
 
+	// 窗口关闭的回调函数
 	glfwSetWindowCloseCallback(m_pGLFWWindow, [](GLFWwindow* window)
 	{
 		auto& pWindowCallBack = *(WindowCallBack*)glfwGetWindowUserPointer(window);
@@ -141,6 +155,7 @@ void WindowsWindow::Init()
 		pWindowCallBack.EventCallback(event);
 	});
 
+	// 键盘按键的回调函数
 	glfwSetKeyCallback(m_pGLFWWindow, [](GLFWwindow* window, int key, int /*scancode*/, int action, int /*mods*/)
 	{
 		auto& pWindowCallBack = *(WindowCallBack*)glfwGetWindowUserPointer(window);
@@ -167,6 +182,7 @@ void WindowsWindow::Init()
 		}
 	});
 
+	// 打字时调用的Event
 	glfwSetCharCallback(m_pGLFWWindow, [](GLFWwindow* window, unsigned int keycode)
 	{
 		auto& pWindowCallBack = *(WindowCallBack*)glfwGetWindowUserPointer(window);
@@ -175,6 +191,7 @@ void WindowsWindow::Init()
 		pWindowCallBack.EventCallback(event);
 	});
 
+	// 鼠标按钮的回调函数
 	glfwSetMouseButtonCallback(m_pGLFWWindow, [](GLFWwindow* window, int button, int action, int mods)
 	{
 		auto& pWindowCallBack = *(WindowCallBack*)glfwGetWindowUserPointer(window);
@@ -196,6 +213,7 @@ void WindowsWindow::Init()
 		}
 	});
 
+	// 鼠标滑轮的回调函数
 	glfwSetScrollCallback(m_pGLFWWindow, [](GLFWwindow* window, double xOffset, double yOffset)
 	{
 		auto& pWindowCallBack = *(WindowCallBack*)glfwGetWindowUserPointer(window);
@@ -204,6 +222,7 @@ void WindowsWindow::Init()
 		pWindowCallBack.EventCallback(event);
 	});
 
+	// 光标的回调函数（鼠标移动）
 	glfwSetCursorPosCallback(m_pGLFWWindow, [](GLFWwindow* window, double xPos, double yPos)
 	{
 		auto& pWindowCallBack = *(WindowCallBack*)glfwGetWindowUserPointer(window);
@@ -213,11 +232,9 @@ void WindowsWindow::Init()
 	});
 }
 
-// 销毁窗口
+// 结束窗口
 void WindowsWindow::Shutdown()
 {
 	glfwDestroyWindow(m_pGLFWWindow);
 }
-
-
 TINY_ENGINE_NAMESPACE_END

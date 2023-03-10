@@ -1,13 +1,14 @@
 #pragma once
-
 #include "Buffer.h"
 #include "VertexBufferLayout.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
+// 顶点缓冲基类
 class VertexBuffer :public Buffer
 {
 public:
+	// 析构函数
 	virtual ~VertexBuffer() = default;
 
 	void SetVertexBufferLayout(const Ref<VertexBufferLayout>& spVertexBufferLayout);

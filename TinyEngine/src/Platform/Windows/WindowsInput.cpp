@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "WindowsInput.h"
-#include "TinyEngine/Core/Application.h"
+
 #include "GLFW/glfw3.h"
+
+#include "TinyEngine/Core/Application.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
@@ -9,11 +11,14 @@ Ref<Input> Input::m_spInput = Ref<WindowsInput>(new WindowsInput());
 
 bool WindowsInput::IsKeyPressedImpl(KeyCode keyCode)
 {
+	// 获取当前应用的窗口
 	const auto& spWindow = Application::GetApplication()->GetWindow();
 	TINY_ENGINE_ASSERT(spWindow, "WindowsInput get window failed");
+	// 获取对应的glfw窗口
 	auto glfwWindow = static_cast<GLFWwindow*>(spWindow->GetNativeWindow());
 	TINY_ENGINE_ASSERT(glfwWindow, "WindowsInput get glfwWindow failed");
 
+	// 调用GLFW的对应函数判断键盘是否按下
 	auto state = glfwGetKey(glfwWindow, keyCode);
 	return state == GLFW_PRESS || state == GLFW_REPEAT;
 }

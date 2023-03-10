@@ -3,6 +3,7 @@
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
+// 投影类型：透视投影或正交投影
 enum class ProjectionType
 {
 	Perspective = 0,
@@ -11,11 +12,13 @@ enum class ProjectionType
 
 const std::array<std::string, 2> ProjectionTypeStrings = { "Perspective","Orthographic" };
 
+
 struct CameraMatrix
 {
 	glm::mat4 ViewProjection;
 };
 
+// 相机抽象类
 class Camera
 {
 public:

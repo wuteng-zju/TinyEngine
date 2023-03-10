@@ -3,7 +3,7 @@
 #include <spdlog/fmt/ostr.h>
 
 TINY_ENGINE_NAMESPACE_BEGIN
-
+// 日志类（单例模式）
 class Logger
 {
 public:
@@ -13,12 +13,12 @@ private:
 	Logger(const Logger&) = delete;
 	Logger& operator=(const Logger&) = delete;
 
+	// 日志
 	static Ref<spdlog::logger> m_spLogger;
 };
 
 TINY_ENGINE_NAMESPACE_END
 
-// 
 #define LOG_DEV_ERROR(...) ::TinyEngine::Logger::GetLogger()->error(__VA_ARGS__)
 
 // 

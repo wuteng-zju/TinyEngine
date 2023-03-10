@@ -8,7 +8,7 @@
 #include <glm/gtx/compatibility.hpp>
 
 
-#include "TinyEngine/Render/Render2D.h"
+#include "TinyEngine/Render/Render2D/Render2D.h"
 #include "TinyEngine/Render/Camera/OrthoGraphicCamera.h"
 #include "TinyEngine/Render/Texture/Texture2D.h"
 #include "TinyEngine/Scene/Primitive/QuadPrimitive.h"
@@ -21,7 +21,7 @@ ParticleSystem2D::ParticleSystem2D()
 	m_spQuadPrimtive = CreateRef<QuadPrimitive>();
 }
 
-void ParticleSystem2D::OnUpdate(TimeStep timeStep)
+void ParticleSystem2D::OnUpdate(Time Time)
 {
 	for (auto& particle : m_vecParticlePool)
 	{
@@ -34,9 +34,9 @@ void ParticleSystem2D::OnUpdate(TimeStep timeStep)
 			continue;
 		}
 
-		particle.LifeRemaining -= timeStep;
-		particle.Position += particle.Velocity * (float)timeStep;
-		particle.Rotation += 0.01f * timeStep;
+		particle.LifeRemaining -= Time;
+		particle.Position += particle.Velocity * (float)Time;
+		particle.Rotation += 0.01f * Time;
 	}
 }
 

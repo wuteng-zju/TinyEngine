@@ -9,6 +9,19 @@ IncludeDir["ImGuizmo"] = "%{wks.location}/TinyEngine/vendor/ImGuizmo"
 IncludeDir["glm"] = "%{wks.location}/TinyEngine/vendor/glm"
 IncludeDir["entt"] = "%{wks.location}/TinyEngine/vendor/entt/include"
 IncludeDir["Box2D"] = "%{wks.location}/TinyEngine/vendor/Box2D/include"
+IncludeDir["mono"] = "%{wks.location}/TinyEngine/vendor/mono/include"
+
+LibraryDir = {}
+LibraryDir["mono"] = "%{wks.location}/TinyEngine/vendor/mono/lib/%{cfg.buildcfg}"
+
+Library = {}
+Library["mono"] = "%{LibraryDir.mono}/mono-2.0-sgen.lib"
+
+BinaryDir = {}
+BinaryDir["mono"] = "%{wks.location}/TinyEngine/vendor/mono/bin/%{cfg.buildcfg}"
+
+Binary = {}
+Binary["mono"] = "%{BinaryDir.mono}/mono-2.0-sgen.dll"
 
 --workspace 解决方案
 workspace "MyTinyEngine"
@@ -39,7 +52,6 @@ workspace "MyTinyEngine"
   outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
   group "Dependencies"
-    -- include "vendor/premake"
     include "TinyEngine/vendor/GLFW"
     include "TinyEngine/vendor/GL3W"
     include "TinyEngine/vendor/imgui"
@@ -49,9 +61,11 @@ workspace "MyTinyEngine"
 
   group "Engine"
     include "TinyEngine"
+    -- include "TinyEngineScript"
   group ""
 
   group "Game"
     include "SandBox"
+    -- include "SandBoxScript"
   group ""
 

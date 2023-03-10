@@ -1,7 +1,7 @@
 #pragma once
 
 TINY_ENGINE_NAMESPACE_BEGIN
-
+// 顶点数据类型
 enum class VertexDataType
 {
 	None = 0,
@@ -11,13 +11,21 @@ enum class VertexDataType
 	Bool
 };
 
+// 顶点缓冲元素
 struct VertexBufferElement
 {
+	// 顶点缓冲名称
 	std::string Name;
+	// 顶点数据类型
 	VertexDataType DataType;
+	// 是否归一化
 	bool Normalized;
+	// 大小
 	int Size;
+	// 偏移量
 	int Offset;
+
+	// 构造函数
 	VertexBufferElement(VertexDataType dataType, const std::string& sName = "", bool bNormalized = false) :
 		DataType(dataType), Name(sName), Size(VertexDataTypeSize(dataType)), Offset(0), Normalized(bNormalized)
 	{}
@@ -70,16 +78,22 @@ struct VertexBufferElement
 	}
 };
 
+// 顶点缓冲布局VAO
 class VertexBufferLayout
 {
 public:
+	// 析构函数
 	~VertexBufferLayout() = default;
+	// 构造函数
 	VertexBufferLayout(const std::vector<VertexBufferElement>& vecVertexBufferElement);
+	// 
 	const std::vector<VertexBufferElement>& GetVertexBufferElements()const;
 	int GetStride()const;
 
 private:
+	// 一个顶点缓冲数组
 	std::vector<VertexBufferElement> m_vecVertexBufferElement;
+	// 步长
 	int m_iStride;
 };
 

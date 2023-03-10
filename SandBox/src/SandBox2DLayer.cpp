@@ -40,7 +40,7 @@ void SandBox2DLayer::OnDetach()
 
 }
 
-void SandBox2DLayer::OnUpdate(const TimeStep& timeStep)
+void SandBox2DLayer::OnUpdate(const Time& timeStep)
 {
 	TINY_ENGINE_PROFILE_SCOPE("SandBox2DLayer::OnUpdate");
 

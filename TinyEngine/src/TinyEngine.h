@@ -2,7 +2,6 @@
 /* 
 	为Tiny Engine的客户端创建的 
 */
-
 #include "pch.h"
 
 // For use for application(应用端)
@@ -18,13 +17,13 @@
 #include "TinyEngine/ImGui/ContentBrowserPanel.h"
 
 #include "TinyEngine/Render/Render.h"
-#include "TinyEngine/Render/Render2D.h"
-#include "TinyEngine/Render/RenderCommand.h"
-#include "TinyEngine/Render/VertexArray.h"
+#include "TinyEngine/Render/Render2D/Render2D.h"
+#include "TinyEngine/Render/RenderCommand/RenderCommand.h"
+#include "TinyEngine/Render/VertexArray/VertexArray.h"
 #include "TinyEngine/Render/Buffer/VertexBuffer.h"
 #include "TinyEngine/Render/Buffer/IndexBuffer.h"
 #include "TinyEngine/Render/Buffer/FrameBuffer.h"
-#include "TinyEngine/Render/Shader.h"
+#include "TinyEngine/Render/Shader/Shader.h"
 #include "TinyEngine/Render/Texture/SubTexture2D.h"
 #include "TinyEngine/Render/Camera/OrthoGraphicCameraController.h"
 #include "TinyEngine/Render/Camera/EditorCamera.h"

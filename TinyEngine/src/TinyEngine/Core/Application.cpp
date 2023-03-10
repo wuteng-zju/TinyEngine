@@ -1,12 +1,12 @@
 #include "pch.h"
-
 #include "Application.h"
+
 #include "Input.h"
 
 #include "TinyEngine/Events/ApplicationEvent.h"
 
 #include "TinyEngine/Render/Render.h"
-#include "TinyEngine/Render/Render2D.h"
+#include "TinyEngine/Render/Render2D/Render2D.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
@@ -20,7 +20,7 @@ Application::Application(): m_bRunning(true), m_fLastFrameTime(0.f), m_bMinimize
 	// 创建窗口
 	m_spWindow = Window::Create();
 
-	// 设置窗口的事件回调函数
+	// 设置窗口的事件回调函数为此应用对象的OnEvent函数
 	m_spWindow->SetEventCallback(BIND_EVENT_FUN(Application::OnEvent));
 }
 
@@ -38,40 +38,46 @@ void Application::Init()
 	Render::Init();
 	// 
 	Render2D::Init();
-	// 
+	// 创建层栈
 	m_spLayerStack = CreateRef<LayerStack>();
-	// 
+	// 创建ImGuiLayer
 	m_spImGuiLayer = CreateRef<ImGuiLayer>();
-	// 
+	// 将ImGui作为覆盖层压入层栈
 	PushOverlay(m_spImGuiLayer);
 }
 
 // 运行应用程序
 void Application::Run()
 {
+	// 渲染循环
 	while (m_bRunning)
 	{
-		float fTime = TimeStep::GetTime();
-		TimeStep timeStep = fTime - m_fLastFrameTime;
+		// 获取当前时间
+		float fTime = Time::GetTime();
+		// deltaTime为当前帧与上一帧的时间差
+		Time deltaTime = fTime - m_fLastFrameTime;
+		// 更新当前帧为上一帧
 		m_fLastFrameTime = fTime;
 
+		// 获取当前运行中的应用的开启层栈
 		const auto& listLayers = m_spLayerStack->GetLayers();
 
-		// 如果没有最小化
+		// 如果当前窗口没有最小化
 		if (!m_bMinimized)
 		{
-			// 
 			{
 				TINY_ENGINE_PROFILE_SCOPE("Layer OnUpdate")
+				// 正向遍历层栈，依次调用每一层的更新函数（更新每一层）
 				for (auto iter = listLayers.begin(); iter != listLayers.end(); iter++)
 				{
-					(*iter)->OnUpdate(timeStep);
+					(*iter)->OnUpdate(deltaTime);
 				}
 			}
 
-			// 
+			// 统一调用所有层的ImGui函数
 			m_spImGuiLayer->BeginNewFrame();
 			{
+				// 每一个Layer都在调用ImGuiRender函数
 				TINY_ENGINE_PROFILE_SCOPE("Layer OnImGuiRender")
 				for (auto iter = listLayers.begin(); iter != listLayers.end(); iter++)
 				{
@@ -81,7 +87,7 @@ void Application::Run()
 			m_spImGuiLayer->EndNewFrame();
 		}
 
-		// 更新窗口
+		// 更新窗口(渲染)
 		m_spWindow->OnUpdate();
 	}
 }
@@ -89,7 +95,7 @@ void Application::Run()
 // 
 void Application::OnEvent(Event& event)
 {
-	// 
+	// 定义事件分发器
 	EventDispatcher dispatcher(event);
 	dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FUN(Application::OnMouseButtonPressedEvent));
 	dispatcher.Dispatch<MouseButtonReleasedEvent>(BIND_EVENT_FUN(Application::OnMouseButtonReleasedEvent));
@@ -101,7 +107,7 @@ void Application::OnEvent(Event& event)
 	dispatcher.Dispatch<WindowResizedEvent>(BIND_EVENT_FUN(Application::OnWindowResizedEvent));
 	dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUN(Application::OnWindowClosedEvent));
 
-	// 
+	// 反向遍历层栈中的每一层处理事件
 	const auto& listLayers = m_spLayerStack->GetLayers();
 	for (auto iter = listLayers.rbegin(); iter != listLayers.rend(); iter++)
 	{

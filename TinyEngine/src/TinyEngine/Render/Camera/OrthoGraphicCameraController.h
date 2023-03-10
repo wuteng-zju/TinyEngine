@@ -25,7 +25,7 @@ public:
 	const std::shared_ptr<OrthoGraphicCamera>& GetCamera()const;
 	void SetZoomLevel(float fZoomLevel);
 	float GetZoomLevel()const;
-	void OnUpdate(TimeStep timeStep);
+	void OnUpdate(Time time);
 	void OnEvent(Event& event);
 	void OnResize(unsigned int uiWidth, unsigned int uiHeight);
 	OrthoGraphicCameraBounds GetOrthoGraphicCameraBounds();

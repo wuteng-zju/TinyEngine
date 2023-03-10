@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "Render.h"
-#include "RenderCommand.h"
+
+#include "RenderCommand/RenderCommand.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
-Ref<Render::SceneData> Render::m_spSceneData = CreateRef<Render::SceneData>();
+Ref<SceneData> Render::m_spSceneData = CreateRef<SceneData>();
+
+// ‰÷»æ≥ı ºªØ
 void Render::Init()
 {
 	RenderCommand::Init();

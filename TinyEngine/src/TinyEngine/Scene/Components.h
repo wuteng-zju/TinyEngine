@@ -11,6 +11,7 @@
 
 TINY_ENGINE_NAMESPACE_BEGIN
 
+// ID组件
 struct IDComponent
 {
 	UUID ID;
@@ -19,6 +20,8 @@ struct IDComponent
 	IDComponent& operator =(const IDComponent&) = default;
 };
 
+
+// Tag组件
 struct TagComponent
 {
 	std::string Tag = "Entity";
@@ -29,6 +32,8 @@ struct TagComponent
 	{}
 };
 
+
+// Tranform组件
 struct TransformComponent
 {
 	glm::vec3 Translation = glm::vec3(0.f);
@@ -55,6 +60,8 @@ struct TransformComponent
 	}
 };
 
+
+// 矩形组件
 struct SpriteRenderComponent
 {
 	Ref<Texture> spTexture;
@@ -64,6 +71,8 @@ struct SpriteRenderComponent
 	SpriteRenderComponent& operator =(const SpriteRenderComponent&) = default;
 };
 
+
+// 圆形组件
 struct CircleRenderComponent
 {
 	Ref<Texture> spTexture;
@@ -73,6 +82,8 @@ struct CircleRenderComponent
 	CircleRenderComponent& operator =(const CircleRenderComponent&) = default;
 };
 
+
+// 相机组件
 struct CameraComponent
 {
 	Ref<Camera> OrthoCamera = CreateRef<OrthoGraphicCamera>();

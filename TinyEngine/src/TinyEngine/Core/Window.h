@@ -16,11 +16,11 @@ struct WindowProps
 	int Width;
 	int Height;
 
-	// 
+	// OpenGL版本号
 	int MajorVersion;
 	int MinorVersion;
 
-	// 
+	// 多重采样MSAA
 	int Samples;
 
 	// 构造函数
@@ -35,38 +35,40 @@ struct WindowProps
 	}
 };
 
-// 窗口抽象类
+// 事件回调函数
+using EventCallbackFn = std::function<void(Event&)>;
+
+// 窗口抽象类，单例模式
 class Window
 {
 public:
-	// 事件回调函数
-	using EventCallbackFn = std::function<void(Event&)>;
-
-	// 析构函数
+	// 析构函数（虚函数）
 	virtual ~Window() {}
 
-	// 每一帧调用
+	// 每一帧调用（纯虚函数）
 	virtual void OnUpdate() = 0;
 
-	// 获取窗口宽度
+	/********************** 窗口属性 ************************/
+	// 获取窗口宽度（纯虚函数）
 	virtual unsigned int GetWindowWidth() const = 0;
-
-	// 获取窗口高度
+	// 获取窗口高度（纯虚函数）
 	virtual unsigned int GetWindowHeight() const = 0;
-
-	// Window attributes
-	virtual void SetEventCallback(const EventCallbackFn& callback) = 0; // 设置窗口事件回调函数,平台触发
-	virtual void SetVSync(bool enabled) = 0; // 
+	// 设置窗口事件回调函数,平台触发（纯虚函数）
+	virtual void SetEventCallback(const EventCallbackFn& callback) = 0; 
+	// 设置垂直同步
+	virtual void SetVSync(bool enabled) = 0;
+	// 是否开启垂直同步
 	virtual bool IsVSync() const = 0;
-
+	// 
 	virtual void* GetNativeWindow()const = 0;
 
-	// 创建窗口
+	/********************** 创建窗口 ************************/
 	static Ref<Window> Create(const WindowProps& windowPorps = WindowProps());
 protected:
 	// 构造函数
 	Window(const WindowProps& windowPorps);
 private:
+	// 删除默认构造、拷贝构造和拷贝赋值运算符（用于单例模式）
 	Window() = delete;
 	Window(Window&) = delete;
 	Window& operator=(const Window&) = delete;

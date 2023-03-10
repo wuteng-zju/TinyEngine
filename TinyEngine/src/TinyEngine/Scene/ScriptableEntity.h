@@ -15,7 +15,7 @@ public:
 		return m_spEntity->GetComponent<T>();
 	}
 	virtual void OnCreate() {}
-	virtual void OnUpdate(TimeStep ts) {}
+	virtual void OnUpdate(Time ts) {}
 private:
 	Ref<Entity> m_spEntity;
 };

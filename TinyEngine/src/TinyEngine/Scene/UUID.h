@@ -2,7 +2,7 @@
 #include <xhash>
 
 TINY_ENGINE_NAMESPACE_BEGIN
-
+// UUID¿‡
 class UUID
 {
 public:

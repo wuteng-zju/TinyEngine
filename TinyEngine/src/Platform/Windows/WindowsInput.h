@@ -2,7 +2,7 @@
 #include "TinyEngine/Core/Input.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
-
+// Windows平台下的Input输入类
 class WindowsInput :public Input
 {
 protected:

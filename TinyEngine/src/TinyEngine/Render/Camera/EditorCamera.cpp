@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "TinyEngine/Render/Camera/EditorCamera.h"
 #include "TinyEngine/Events/MouseEvent.h"
-#include "TinyEngine/Core/TimeStep.h"
 #include "TinyEngine/Core/Input.h"
 #include "TinyEngine/Core/KeyCode.h"
 #include "TinyEngine/Core/MouseCode.h"
@@ -21,7 +20,7 @@ EditorCamera::EditorCamera(float fFOV, float fAspectRatio, float fNearClip, floa
 	UpdateView();
 }
 
-void EditorCamera::OnUpdate(const TimeStep& ts)
+void EditorCamera::OnUpdate(const Time& ts)
 {
 	if (Input::IsKeyPressed(Key::LeftAlt))
 	{

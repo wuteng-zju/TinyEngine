@@ -19,7 +19,7 @@
 #include "TinyEngine/Core/Core.h"
 #include "TinyEngine/Core/Logger.h"
 #include "TinyEngine/Debug/Instrumentor.h"
-#include "TinyEngine/Core/TimeStep.h"
+#include "TinyEngine/Core/Time.h"
 
 // glmœ‡πÿ
 #define GLM_ENABLE_EXPERIMENTAL

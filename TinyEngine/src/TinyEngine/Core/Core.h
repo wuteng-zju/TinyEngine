@@ -18,13 +18,14 @@
 	}
 #endif 
 
-// 
+// 断言
 #ifdef TINY_ENGINE_ENABLE_ASSERTS
 #define TINY_ENGINE_ASSERT(x,...) { if(!(x)) { LOG_DEV_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); }}
 
 #endif // TINY_ENGINE_ENABLE_ASSERTS
 
 TINY_ENGINE_NAMESPACE_BEGIN
+	// 使用unique_ptr模拟scopred_ptr
 	template<typename T>
 	using Scope = std::unique_ptr<T>;
 
@@ -34,6 +35,7 @@ TINY_ENGINE_NAMESPACE_BEGIN
 		return std::make_unique<T>(std::forward<Args>(args)...);
 	}
 
+	// 使用shared_ptr模拟ref_ptr
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
 

@@ -31,8 +31,8 @@ project "TinyEngine"
 		"src/**.h",
 		"src/**.cpp",
 
-    -- 
-    "vendor/stb_image/**.h",
+   		 -- 
+    	"vendor/stb_image/**.h",
 		"vendor/stb_image/**.cpp",
 		"vendor/glm/glm/**.hpp",
 		"vendor/glm/glm/**.inl",
@@ -41,22 +41,23 @@ project "TinyEngine"
 		"vendor/ImGuizmo/ImGuizmo.cpp"
 	}
 
-  -- 
+  	-- 
 	includedirs
 	{
-    -- 
+    	-- 
 		"src",
 
-    -- 
-    "vendor/spdlog/include",
+    	-- 
+    	"vendor/spdlog/include",
 
-    "%{IncludeDir.GLFW}",
+    	"%{IncludeDir.GLFW}",
 		"%{IncludeDir.GL3W}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.mono}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.Box2D}"
 	}
@@ -86,8 +87,8 @@ project "TinyEngine"
 		{
 			"TINY_ENGINE_PLATFORM_WINDOWS",
 			"TINY_ENGINE_BUILD_DLL",
-      "TINY_ENGINE_ENABLE_ASSERTS",
-      "TINY_ENGINE_RENDER_OPENGL",
+      		"TINY_ENGINE_ENABLE_ASSERTS",
+      		"TINY_ENGINE_RENDER_OPENGL",
 		}
 
   -- Debug配置项属性

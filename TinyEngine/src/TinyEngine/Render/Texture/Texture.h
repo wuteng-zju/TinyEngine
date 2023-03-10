@@ -2,7 +2,7 @@
 #include "pch.h"
 
 TINY_ENGINE_NAMESPACE_BEGIN
-
+// Œ∆¿Ì≥ÈœÛ¿‡
 class Texture
 {
 public:

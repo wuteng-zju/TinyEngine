@@ -5,6 +5,7 @@ TINY_ENGINE_NAMESPACE_BEGIN
 
 extern const std::filesystem::path sAssetsDirector;
 
+// 构造函数
 SandBoxEditorLayer::SandBoxEditorLayer()
 	:m_vec4Color(glm::vec4(0.2f, 0.3f, 0.8f, 1.0f)),
 	m_bViewportHovered(false),
@@ -41,28 +42,33 @@ SandBoxEditorLayer::SandBoxEditorLayer()
 	m_spIconStop = Texture2D::Create("assets/textures/Icons/StopButton.png");
 }
 
+// 析构函数
 SandBoxEditorLayer::~SandBoxEditorLayer()
 {
 }
 
+// 被压入层栈时
 void SandBoxEditorLayer::OnAttach()
 {
-	m_spCameraEntity = m_spEditorScene->CreateEntity("Camera Entity");
-	m_spCameraEntity->AddComponent<CameraComponent>();
+	// 创造相机对象
+	//m_spCameraEntity = m_spEditorScene->CreateEntity("Camera Entity");
+	//m_spCameraEntity->AddComponent<CameraComponent>();
 
-	m_spSquareEntity = m_spEditorScene->CreateEntity("Square Entity");
-	m_spSquareEntity->AddComponent<SpriteRenderComponent>();
+	//m_spSquareEntity = m_spEditorScene->CreateEntity("Square Entity");
+	//m_spSquareEntity->AddComponent<SpriteRenderComponent>();
 
-	m_spCameraEntity = m_spEditorScene->CreateEntity("Circle Entity");
-	m_spCameraEntity->AddComponent<CircleRenderComponent>();
+	//m_spCameraEntity = m_spEditorScene->CreateEntity("Circle Entity");
+	//m_spCameraEntity->AddComponent<CircleRenderComponent>();
 }
 
+// 被推出层栈时
 void SandBoxEditorLayer::OnDetach()
 {
 
 }
 
-void SandBoxEditorLayer::OnUpdate(const TimeStep& timeStep)
+// 更新时（每一帧调用）
+void SandBoxEditorLayer::OnUpdate(const Time& timeStep)
 {
 	TINY_ENGINE_PROFILE_SCOPE("SandBoxEditorLayer::OnUpdate");
 	m_spEditorScene->OnViewPortResize(m_vec2RenderViewPortSize.x, m_vec2RenderViewPortSize.y);
@@ -330,6 +336,7 @@ void SandBoxEditorLayer::OnImGuiRender()
 	ImGui::End();
 }
 
+// 
 void SandBoxEditorLayer::OnEvent(Event& e)
 {
 	if (m_eSceneState == SceneState::Edit)
@@ -343,6 +350,7 @@ void SandBoxEditorLayer::OnEvent(Event& e)
 	dispatcher.Dispatch<MouseButtonPressedEvent>(BIND_EVENT_FUN(SandBoxEditorLayer::OnMousePressed));
 }
 
+// 
 bool SandBoxEditorLayer::OnKeyPressed(KeyPressedEvent& e)
 {
 	if (e.IsRepeat())

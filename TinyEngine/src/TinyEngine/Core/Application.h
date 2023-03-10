@@ -5,11 +5,10 @@
 
 
 TINY_ENGINE_NAMESPACE_BEGIN
-
+// 游戏/应用基类
 class Application
 {
 public:
-	// App相关
 	// 在客户端中定义实现
 	static void CreateApplication();
 	// 获取Application
@@ -60,19 +59,27 @@ private:
 	bool OnWindowResizedEvent(WindowResizedEvent& event);
 	bool OnWindowClosedEvent(WindowCloseEvent& e);
 private:
+	/***************** 
+	* 每个应用(游戏)的状态包括：
+		m_bRunning：当前应用是否在运行
+		m_spWindow：当前应用的运行窗口
+		m_spLayerStack：当前应用的层栈，一个应用只需要一个LayerStack，存放多个Layer
+		m_Minimized：当前应用窗口是否被最小化
+		m_fLastFrameTime：当前应用最近一帧渲染的时间
+	*********************/
 	// 当前App是否在运行
 	bool m_bRunning;
 
 	// 是否最小化
 	bool m_bMinimized;
 
-	// 最后一帧的事件
+	// 最后一帧的时间
 	float m_fLastFrameTime;
 
-	// 窗口
+	// 应用窗口
 	Ref<Window> m_spWindow;
 
-	// 
+	// 层栈
 	Ref<LayerStack> m_spLayerStack;
 
 	// 
